@@ -78,48 +78,48 @@ def N_Calc():
 		for j in range((h*30)//100, h):
 			if SBS[j][i]==1:
 				CP_count+=1
-		Nsbs[0][i] = EP_count
-		Nsbs[1][i] = CP_count
+		Nsbs[i][0] = EP_count
+		Nsbs[i][1] = CP_count
 	return Nsbs
 
-def N(cust):
-	EP_count = Nsbs[0][cust]
-	CP_count = Nsbs[1][cust]
+def N(cust, Nsbs):
+	EP_count = Nsbs[cust][0]
+	CP_count = Nsbs[cust][1]
 	return EP_count+CP_count
 
-def P(cp_i, c_j):
+def P(cp_i, c_j, Nsbs):
 	P=0
 	if SBS[cp_i, c_j]==1:
-		P = 1 / N[EP, CP, c_j]
+		P = 1 / N(c_j, Nsbs)
 	else:
 		pass
 	return P
 
-def E(kCP, C):
+def E(kCP, C, Nsbs):
 	E = 0
 	for cp_i in kCP:
 		for c_j in C:
-			E += P(cp_i, c_j)
+			E += P(cp_i, c_j, Nsbs)
 	return E
 
-def Espga(S, C):
+def Espga(S, C, Nsbs):
 	E = 0
 	for cj in C:
-		E+=P(S, cj)
+		E+=P(S, cj, Nsbs)
 	return E
 
-def SPGA(k):
-	k = [0]*k
+def SPGA(SBS, k):
+	k = [(0, 0)]*k
 	heapq.heapify(k)
 	Nsbs = N_Calc()
 	for cp in CP:
 		S = cp
-		E = Espga(S, C)
-		heapq.heappush(k, E)
+		E = Espga(S, C, Nsbs)
+		heapq.heappush(k, (E, cp))
 		heapq.heappop(k)
 	return k
 
-
+# Creating the Satisfaction Bit String of every customer
 try:
 	SBS = read_SBS("data_process/car_SBS.csv")
 except:
@@ -130,10 +130,14 @@ np.random.shuffle(SBS)
 h=len(SBS)
 w=len(SBS[0])
 
+# Creating Sets of Customers, Candidate Products and Existing Products.
 C = np.arange(0, w)
 EP = np.arange(0, (h*30)//100)
 CP = np.arange((h*30)//100, h)
 # kCP = ?
 
-k = SPGA(5)
-print(k)
+# Taking K as 5
+k=38
+k = SPGA(SBS, k)
+
+print("Single Product Based Greedy Algorithm : \n", k)
