@@ -45,8 +45,8 @@ cols=len(SBS[0])
 
 # Creating Sets of Customers, Candidate Products and Existing Products.
 C = np.arange(0, cols)
-CP = np.arange(0, (rows*70)//100)
-EP = np.arange((rows*70)//100, rows)
+EP = np.arange(0, (rows*30)//100)
+CP = np.arange((rows*30)//100, rows)
 # kCP = ?
 
 # SPGA
@@ -69,3 +69,40 @@ print("Time taken:", timeTaken.seconds)
 # timeTaken = datetime.datetime.now() - timeTaken
 # print("Upper Bound Pruning Algorithm : \n", UBP_k)
 # print("Time taken:", timeTaken.seconds)
+
+
+
+"""**********************************ROUGH********************"""
+
+# # Cluster number of each datapoint
+# labels = list(kmeans.labels_)
+# # print(labels)
+
+# arr = [[] for i in range(n_clusters)]
+# for i,j in enumerate(labels):
+#   arr[j].append(i)
+
+# Clusters = [[] for i in range(n_clusters)]
+# for i in range(n_clusters):
+#   Clusters[i] = data[arr[i],:]
+# # Print the no. of products each cluster contains.
+# for i in range(n_clusters):
+#   print("%d: %d"% (i,len(Clusters[i])), end='\n')
+
+
+# # Cluster no of selected products.
+# selected_products = []
+# print("\nproducts selected by SPG algo")
+# for i in SPG_k:
+#   selected_products.append(labels[i[1]])
+# print(selected_products)
+# print("\nproducts selected by IG algo")
+# for i in IG_k:
+#   selected_products.append(labels[i])
+# print(selected_products)
+
+
+
+# Run over the cluster from which majority of the products have been selected previously.
+# cluster = max(set(selected_products), key = selected_products.count)
+# print(cluster)
