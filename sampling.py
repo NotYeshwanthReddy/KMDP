@@ -1,10 +1,7 @@
+import numpy as np
 
 
-
-def sampling(CP,EP,data,SBS,percentage=10):
-    CP_sample = np.random.choice(CP, (len(CP)*percentage)//100)
-    EP_sample = np.random.choice(EP, (len(EP)*percentage)//100)
-    
-# Incomplete function
-    return CP_sample, EP_sample
-
+def sampling(EP, CP):
+    sampled_CP = np.random.choice(CP, (len(CP)*10)//100, replace=False)
+    sampled_EP = np.random.choice(EP, (len(EP)*10)//100, replace=False)
+    return sampled_EP, sampled_CP
