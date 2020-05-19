@@ -180,7 +180,10 @@ print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
 print("Time taken in millis:", timeTaken)
 # print("Product score:", productScore)
 
+
+# ===================================PRINT OUTPUT TO FILE================================
+
 with open('BestCandidates.csv', 'w') as csvfile:
     writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
     for prod in selectedProdsSPG:
-	    spamwriter.writerow([prod])
+	    writer.writerow([prod])
