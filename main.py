@@ -5,9 +5,21 @@ from algorithms.Apriori import Apriori
 from algorithms.UBP import UBP
 from clustering import KMeans, AgglomerativeHierarchical, AffinityPropagation, MeanShift
 from sampling import sampling
+from dimension_reduction import SOM
+
 import numpy as np
 import time
 
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument(
+        "--som",
+        action="store_true",
+        help="Use Self Organisig Maps before clustering.",
+    )
+args = parser.parse_args()
 
 # ====================================FILE HANDLING======================================
 
@@ -23,6 +35,9 @@ except:
     data = createData(datasetLocation) 
     SBS = createSBS(data, datasetLocation)
 
+
+if args.som:
+    data = SOM.SelfOrganisedMap(data)
 
 # =======================================GLOBALS=========================================
 
