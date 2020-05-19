@@ -9,6 +9,7 @@ from dimension_reduction import SOM
 
 import numpy as np
 import time
+import csv
 
 import argparse
 
@@ -178,3 +179,8 @@ timeTaken = int(round(time.time() * 1000)) - timeTaken
 print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
 print("Time taken in millis:", timeTaken)
 # print("Product score:", productScore)
+
+with open('BestCandidates.csv', 'w') as csvfile:
+    writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+    for prod in selectedProdsSPG:
+	    spamwriter.writerow([prod])
