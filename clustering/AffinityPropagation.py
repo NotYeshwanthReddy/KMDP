@@ -5,7 +5,7 @@ from statistics import mode
 
 
 def Affinity_Propagation(data, SBS, C, EP, CP, selected_products):
-  ap = AffinityPropagation(preference=-200)
+  ap = AffinityPropagation(preference=-200, random_state = 0)
   ap.fit(data)
   
   n_clusters = len(ap.cluster_centers_)

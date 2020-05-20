@@ -39,6 +39,8 @@ except:
 
 if args.som:
     data = SOM.SelfOrganisedMap(data)
+    data = np.array(data)
+
 
 # =======================================GLOBALS=========================================
 
@@ -56,22 +58,25 @@ k = 5
 
 # =================================BEFORE CLUSTERING=====================================
 
-print('BEFORE CLUSTERING:')
-# IG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsIG, productScore = IG(k, C, SBS, EP, CP)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+try:
+	print('BEFORE CLUSTERING:')
+	# IG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsIG, productScore = IG(k, C, SBS, EP, CP)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
 
-# SPGA
-timeTaken = int(round(time.time() * 1000))
-selectedProdsSPG, productScore = SPG(k, C, SBS, EP, CP)
-timeTaken = int(round(time.time() * 1000)) - timeTaken 
-print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	# SPGA
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsSPG, productScore = SPG(k, C, SBS, EP, CP)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken 
+	print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
+except:
+	print("Error before clustering")
 
 
 # =====================================SAMPLING==========================================
@@ -84,101 +89,114 @@ bestSampledProds, productScore = SPG(k*2, C, SBS, sampledEP, sampledCP)
 
 # =================================AFFINITY PROPAGATION==================================
 
-timeTaken = int(round(time.time() * 1000))
-EP_New, CP_New, n_clusters = AffinityPropagation.Affinity_Propagation(data, SBS, C, EP, CP, bestSampledProds)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print('Affinity Propagetion time:', timeTaken)
+try:
+	timeTaken = int(round(time.time() * 1000))
+	EP_New, CP_New, n_clusters = AffinityPropagation.Affinity_Propagation(data, SBS, C, EP, CP, bestSampledProds)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print('Affinity Propagation time:', timeTaken)
 
-print('AFTER AFFINITY PROPAGATION:')
-# IG
+	print('AFTER AFFINITY PROPAGATION:')
+	# IG
 
-selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
 
-# SPG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken 
-print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	# SPG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken 
+	print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
+except:
+	print("Error in Affinity Propagation")
 
 
 # =================================MEAN SHIFT CLUSTERING=================================
-timeTaken = int(round(time.time() * 1000))
-EP_New, CP_New = MeanShift.Mean_Shift(data, SBS, C, EP, CP, bestSampledProds)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print('Mean Shift time:', timeTaken)
 
-print('AFTER MEAN SHIFT CLUSTERING:')
-# IG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+try:
+	timeTaken = int(round(time.time() * 1000))
+	EP_New, CP_New = MeanShift.Mean_Shift(data, SBS, C, EP, CP, bestSampledProds)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print('Mean Shift time:', timeTaken)
 
-# SPG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken 
-print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	print('AFTER MEAN SHIFT CLUSTERING:')
+	# IG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
+
+	# SPG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken 
+	print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
+except:
+	print("Error in Mean Shift")
 
 
 # =================================KMEANS CLUSTERING=====================================
 
-timeTaken = int(round(time.time() * 1000))
-EP_New, CP_New = KMeans.K_Means(data, SBS, C, EP, CP, bestSampledProds, n_clusters)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print('Kmeans time:', timeTaken)
+try:
+	timeTaken = int(round(time.time() * 1000))
+	EP_New, CP_New = KMeans.K_Means(data, SBS, C, EP, CP, bestSampledProds, 10)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print('Kmeans time:', timeTaken)
 
-print('AFTER KMEANS CLUSTERING:')
-# IG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	print('AFTER KMEANS CLUSTERING:')
+	# IG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
 
-# SPG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken 
-print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	# SPG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken 
+	print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
+except:
+	print("Error in K-Means")
 
 
 # ================================AGGLOMERATIVE CLUSTERING===============================
 
-timeTaken = int(round(time.time() * 1000))
-EP_New, CP_New = AgglomerativeHierarchical.Agglomerative_Clustering(data, SBS, C, EP, CP, bestSampledProds, n_clusters)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print('agglomertaive  time:', timeTaken)
+try:
+	timeTaken = int(round(time.time() * 1000))
+	EP_New, CP_New = AgglomerativeHierarchical.Agglomerative_Clustering(data, SBS, C, EP, CP, bestSampledProds, 10)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print('Agglomerative  time:', timeTaken)
 
-print('AFTER AGGLOMERATIVE CLUSTERING:')
-# IG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken
-print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	print('AFTER AGGLOMERATIVE CLUSTERING:')
+	# IG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsIG, productScore = IG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken
+	print("Incremental Based Greedy Algorithm : \n", selectedProdsIG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
 
-# SPG
-timeTaken = int(round(time.time() * 1000))
-selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
-timeTaken = int(round(time.time() * 1000)) - timeTaken 
-print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
-print("Time taken in millis:", timeTaken)
-# print("Product score:", productScore)
+	# SPG
+	timeTaken = int(round(time.time() * 1000))
+	selectedProdsSPG, productScore = SPG(k, C, SBS, EP_New, CP_New)
+	timeTaken = int(round(time.time() * 1000)) - timeTaken 
+	print("Single Product Based Greedy Algorithm : \n", selectedProdsSPG)
+	print("Time taken in millis:", timeTaken)
+	# print("Product score:", productScore)
+except:
+	print("Error in Agglomerative clustering")
 
 
 # ===================================PRINT OUTPUT TO FILE================================
