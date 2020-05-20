@@ -77,3 +77,19 @@ def readSBS(SBSLocation='./data_process/car_SBS.csv'):
     SBS = pd.read_csv(SBSLocation, header=None)
     SBS = np.array(SBS, dtype=np.uint8)
     return SBS
+
+
+
+def getData(_readData=True, _createData=False, fileLocation='./data_process/car.csv'):
+    if _createData:
+        data = createData(fileLocation) if fileLocation else createData()
+    elif _readData:
+        data = readData(fileLocation) if fileLocation else readData()
+    return data
+
+def getSBS(_readSBS=True, _createSBS=False, fileLocation='./data_process/car_SBS.csv', data=None):
+    if _createSBS and data is not None:
+        SBS = createSBS(data, fileLocation) if fileLocation else createSBS(data)
+    elif _readSBS:
+        SBS = readSBS(fileLocation) if fileLocation else readSBS()
+    return SBS

@@ -1,4 +1,4 @@
-from dataManager import createData, createSBS, readData, readSBS
+from dataManager import getData, getSBS
 from algorithms.IG import IG
 from algorithms.SPG import SPG
 from algorithms.Apriori import Apriori
@@ -16,9 +16,31 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-        "--som",
+        "--do_reduce",
         action="store_true",
-        help="Use Self Organisig Maps before clustering.",
+        help="Reduce dimensions using Self Organisig Maps before clustering.",
+    )
+parser.add_argument(
+        "--read_data",
+        action="store_true",
+		default=True,
+        help="Read Data",
+    )
+parser.add_argument(
+        "--create_data",
+        action="store_true",
+        help="Create Data",
+    )
+parser.add_argument(
+        "--read_sbs",
+        action="store_true",
+		default=True,
+        help="Read SBS Table",
+    )
+parser.add_argument(
+        "--create_sbs",
+        action="store_true",
+        help="Create New SBS table",
     )
 args = parser.parse_args()
 
@@ -29,15 +51,20 @@ dataLocation = "./data_process/car.csv"
 sbsLocation = "./data_process/car_SBS.csv"
 datasetLocation = "./dataset/car/car.data"
 
-try:
-    data = readData(dataLocation) 
-    SBS = readSBS(sbsLocation)
-except:
-    data = createData(datasetLocation) 
-    SBS = createSBS(data, datasetLocation)
+# get data
+if args.create_data:
+	data = getData(_createData=True, fileLocation=datasetLocation)
+elif args.read_data:
+	data = getData(fileLocation=dataLocation)
+# get SBS
+if args.create_sbs:
+	SBS = getSBS(_createSBS=True, fileLocation=datasetLocation, data=data)
+elif args.read_sbs:
+	SBS = getSBS(fileLocation=sbsLocation)
 
-
-if args.som:
+# Reducing Dimensionality
+if args.do_reduce:
+	print('------Reducing Data------')
     data = SOM.SelfOrganisedMap(data)
     data = np.array(data)
 
