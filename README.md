@@ -29,4 +29,6 @@ We used synthetic dataset(car dataset)from UCI machine mastering repository(http
 | np8|	1|	0|	0|	0|	0|	0|	0|	1 |
 | np9|	0|	0|	0|	0|	1|	0|	0|	0 |
 
+Table 1. The SBS of the existing and nominee products 
 
+This approach performs fairly well on most datasets. The outline of this paper is as follows: in Sect. 2 we present the related work and later described the proposed approach. Section 3 presents the results of the experiment 
